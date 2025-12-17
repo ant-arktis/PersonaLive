@@ -28,8 +28,8 @@ def map_device(device_or_str):
     return device_or_str if isinstance(device_or_str, torch.device) else torch.device(device_or_str)
 
 class PersonaLive:
-    def __init__(self, config_path, device=None):
-        cfg = OmegaConf.load(config_path)
+    def __init__(self, args, device=None):
+        cfg = OmegaConf.load(args.config_path)
         if(device is None):
             self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         else:
@@ -126,7 +126,11 @@ class PersonaLive:
                                               "u20", "u21", "u22", "u30", "u31", "u32"]
         torch.cuda.empty_cache()
 
-        self.enable_xformers_memory_efficient_attention()
+        if args.acceleration == "xformers":
+            try:
+                self.enable_xformers_memory_efficient_attention()
+            except Exception as e:
+                print("Failed to enable xformers:", e)
 
     def enable_xformers_memory_efficient_attention(self):
         self.reference_unet.enable_xformers_memory_efficient_attention()

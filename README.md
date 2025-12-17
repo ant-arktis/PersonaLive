@@ -14,9 +14,11 @@
 <img src="assets/demo_3.gif" width="46%"> &nbsp;&nbsp; <img src="assets/demo_2.gif" width="40.5%">
 </div>
 
-## 📣 Updates
-- **[2025.12.15]** 🔥 Release `paper`!
-- **[2025.12.12]** 🔥 Release `inference code`, `config` and `pretrained weights`!
+## 📋 TODO
+- [ ] Fix bugs (If you encounter any issues, please feel free to open an issue or contact me! 🙏)
+- [ ] Enhance WebUI (Support reference image replacement).
+- [x] **[2025.12.15]** 🔥 Release `paper`!
+- [x] **[2025.12.12]** 🔥 Release `inference code`, `config` and `pretrained weights`!
 
 ## ⚙️ Framework
 <img src="assets/overview.png" alt="Image 1" width="100%">
@@ -84,6 +86,11 @@ pretrained_weights
 ```
 python inference_offline.py
 ```
+⚠️ Note for RTX 50-Series (Blackwell) Users: xformers is not yet fully compatible with the new architecture. To avoid crashes, please disable it by running:
+```
+python inference_offline.py --use_xformers False
+```
+
 ### 📸 Online Inference
 #### 📦 Setup Web UI
 ```
@@ -106,11 +113,33 @@ python torch2trt.py
 
 #### ▶️ Start Streaming
 ```
-python inference_online.py
+python inference_online.py --acceleration none (for RTX 50-Series) or xformers or tensorrt
 ```
 then open `http://0.0.0.0:7860` in your browser. (*If `http://0.0.0.0:7860` does not work well, try `http://localhost:7860`)
 
-## 📋 Citation
+**How to use**: Upload Image ➡️ Fuse Reference ➡️ Start Animation ➡️ Enjoy! 🎉
+
+**Regarding Latency**: Latency varies depending on your device's computing power. You can try the following methods to optimize it:
+
+1. Lower the "Driving FPS" setting in the WebUI to reduce the computational workload.
+2. You can increase the multiplier (e.g., set to `num_frames_needed * 4` or higher) to better match your device's inference speed. https://github.com/GVCLab/PersonaLive/blob/6953d1a8b409f360a3ee1d7325093622b29f1e22/webcam/util.py#L73
+
+<div align="center">
+  <img src="assets/guide.png" alt="PersonaLive" width="70%">
+</div>
+
+
+
+## 📚 Community Guides
+
+Special thanks to the community for providing helpful setups! 🍻
+
+* **Windows + RTX 50-Series Guide**: Thanks to @dknos for providing a [detailed guide](https://github.com/GVCLab/PersonaLive/issues/10#issuecomment-3662785532) on running this project on Windows with Blackwell GPUs.
+
+* **TensorRT on Windows**: If you are trying to convert TensorRT models on Windows, [this discussion](https://github.com/GVCLab/PersonaLive/issues/8) might be helpful. Special thanks to @MaraScott and @Jeremy8776 for their insights.
+
+
+## ⭐ Citation
 If you find PersonaLive useful for your research, welcome to 🌟 this repo and cite our work using the following BibTeX:
 ```bibtex
 @article{li2025personalive,

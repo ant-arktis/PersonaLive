@@ -35,6 +35,7 @@ def parse_args():
     parser.add_argument("-L", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", type=str, default="cuda")
+    parser.add_argument("--use_xformers", type=bool, default=True)
     args = parser.parse_args()
 
     return args
@@ -121,13 +122,15 @@ def main(args):
         strict=False,
     )
     
-    if is_xformers_available():
-        reference_unet.enable_xformers_memory_efficient_attention()
-        denoising_unet.enable_xformers_memory_efficient_attention()
-    else:
-        raise ValueError(
-            "xformers is not available. Make sure it is installed correctly"
-        )
+    if args.use_xformers:
+        if is_xformers_available(): 
+            try:
+                reference_unet.enable_xformers_memory_efficient_attention()
+                denoising_unet.enable_xformers_memory_efficient_attention()
+            except Exception as e:
+                print("Failed to enable xformers:", e)
+        else:
+            print("xformers is not available. Make sure it is installed correctly.")
 
     mp_face_mesh = mp.solutions.face_mesh
     face_mesh = mp_face_mesh.FaceMesh(static_image_mode=True, max_num_faces=1)

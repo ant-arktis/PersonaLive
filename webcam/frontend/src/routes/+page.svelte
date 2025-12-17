@@ -197,7 +197,7 @@
         </div>
         <div class="sm:col-span-2 border border-slate-300 rounded-lg p-4 flex gap-4 justify-center">
           <div class="flex items-center gap-4 flex-1">
-              <span class="text-sm font-bold whitespace-nowrap">Target FPS: {fps}</span>
+              <span class="text-sm font-bold whitespace-nowrap">Driving FPS: {fps}</span>
 
               <input 
                   type="range" 

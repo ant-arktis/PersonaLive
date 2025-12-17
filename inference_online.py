@@ -24,12 +24,8 @@ from webcam.util import pil_to_frame, bytes_to_pil, is_firefox, bytes_to_tensor
 from webcam.connection_manager import ConnectionManager, ServerFullException
 import multiprocessing as mp
 
-use_trt = False # set to True to use TensorRT acceleration
-
-if use_trt:
-    from webcam.vid2vid_trt import Pipeline
-else:
-    from webcam.vid2vid import Pipeline
+from webcam.vid2vid_trt import Pipeline as Pipeline_trt
+from webcam.vid2vid import Pipeline
 
 mimetypes.add_type("application/javascript", ".js")
 
@@ -291,7 +287,10 @@ if __name__ == "__main__":
     mp.set_start_method("spawn", force=True)
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    pipeline = Pipeline(config, device)
+    if config.acceleration == "tensorrt":
+        pipeline = Pipeline_trt(config, device)
+    else:
+        pipeline = Pipeline(config, device)
     
     app_obj = App(config, pipeline)
     app = app_obj.app

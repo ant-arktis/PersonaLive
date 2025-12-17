@@ -63,7 +63,7 @@ class Pipeline:
 
         self.process = Process(
             target=generate_process,
-            args=(self.args.config_path, self.prepare_event, self.restart_event, self.stop_event, self.input_queue, self.output_queue, self.reference_queue, self.device),
+            args=(self.args, self.prepare_event, self.restart_event, self.stop_event, self.input_queue, self.output_queue, self.reference_queue, self.device),
             daemon=True
         )
         self.process.start()
@@ -109,7 +109,7 @@ class Pipeline:
         print("Pipeline closed successfully")
 
 def generate_process(
-        config_path, 
+        args, 
         prepare_event, 
         restart_event, 
         stop_event, 
@@ -118,7 +118,7 @@ def generate_process(
         reference_queue,
         device): 
     torch.set_grad_enabled(False)
-    pipeline = PersonaLive(config_path, device)
+    pipeline = PersonaLive(args, device)
     chunk_size = 4
     
     prepare_event.set()

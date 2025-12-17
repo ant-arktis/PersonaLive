@@ -22,8 +22,7 @@ scikit-image==0.22.0
 starlette==0.48.0
 tqdm==4.67.1
 transformers==4.36.2
-uvicorn==0.37.0
+uvicorn[standard]
 xformers==0.0.22.post7
 peft==0.10.0
 python-multipart==0.0.20
-uvicorn==0.37.0
