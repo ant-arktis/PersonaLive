@@ -119,11 +119,13 @@ source start.sh
 #### 🏎️ Acceleration (Optional)
 Converting the model to TensorRT can significantly speed up inference (~ 2x ⚡️). Building the engine may take about `20 minutes` depending on your device. Note that TensorRT optimizations may lead to slight variations or a small drop in output quality.
 ```
-pip install -r requirement_trt.txt
+# Install packages with pip
+pip install -r requirements_trt.txt
 
+# Converting the model to TensorRT
 python torch2trt.py
 ```
-*The provided TensorRT model is from an `H100`. We recommend `ALL users` (including H100 users) re-run `python torch2trt.py` locally to ensure best compatibility.*
+⚠️ The provided TensorRT model is from an `H100`. We recommend `ALL users` (including H100 users) re-run `python torch2trt.py` locally to ensure best compatibility.
 
 #### ▶️ Start Streaming
 ```
@@ -150,6 +152,8 @@ Special thanks to the community for providing helpful setups! 🥂
 * **TensorRT on Windows**: If you are trying to convert TensorRT models on Windows, [this discussion](https://github.com/GVCLab/PersonaLive/issues/8) might be helpful. Special thanks to [@MaraScott](https://github.com/MaraScott) and [@Jeremy8776](https://github.com/Jeremy8776) for their insights.
   
 * **ComfyUI**: Thanks to [@okdalto](https://github.com/okdalto) for helping implement the [ComfyUI-PersonaLive](https://github.com/okdalto/ComfyUI-PersonaLive) support.
+
+* **Useful Scripts**: Thanks to [@suruoxi](https://github.com/suruoxi) for implementing `download_weights.py`, and to [@andchir](https://github.com/andchir) for adding audio merging functionality.
 
 ## 🎬 More Results
 #### 👀 Visualization results
